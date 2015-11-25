@@ -74,8 +74,6 @@ public class MainClass extends Activity{
         }*/
 
         Log.e("Tech", Arrays.toString(manager.getTag().getTechList()));
-        Log.e("Ndef", String.valueOf(manager.getNdefTag()));
-        Log.e("Ndef formattable", String.valueOf(NdefFormatable.get(manager.getTag())));
 
         /*NdefFormatable formatable = NdefFormatable.get(manager.getTag());
         try {
@@ -105,7 +103,7 @@ public class MainClass extends Activity{
 
 
 
-        NdefRW rw = new NdefRW(manager.getNdefTag());
+        NdefRW rw = new NdefRW(manager.getTag());
         NdefRecord [] record = new NdefRecord[2];
         record[0] = NdefRecordCreator.createTextRecord("Melon", Locale.ENGLISH, true);
         record[1] = NdefRecordCreator.createTelephoneRecord("+8801721366503");

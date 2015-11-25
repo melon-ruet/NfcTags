@@ -35,9 +35,6 @@ public class TagManager {
         return tag;
     }
 
-    public final Ndef getNdefTag(){
-        return Ndef.get(tag);
-    }
 
     public byte [] getTagID(){
         return tag.getId();
