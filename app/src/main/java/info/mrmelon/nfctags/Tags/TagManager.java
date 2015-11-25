@@ -8,7 +8,6 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 
 import info.mrmelon.nfctags.Helper.Conversion;
-import info.mrmelon.nfctags.NDEF;
 
 /**
  * Created by melon on 10/14/15
@@ -44,7 +43,7 @@ public class TagManager {
         return tag.getId();
     }
 
-    public String getConvertedTagID(int conversionType){
+    public String getTagID(int conversionType){
         if(conversionType == IN_HEX)
             return Conversion.ByteArrayToHexString(getTagID());
         else if (conversionType == IN_DECIMAL)
