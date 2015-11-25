@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Tags;
+package info.mrmelon.nfctags.tags;
 
 import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;

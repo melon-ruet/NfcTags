@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Helper;
+package info.mrmelon.nfctags.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;

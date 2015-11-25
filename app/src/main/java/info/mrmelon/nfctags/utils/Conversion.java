@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Helper;
+package info.mrmelon.nfctags.utils;
 
 /**
  * Created by melon on 10/14/15

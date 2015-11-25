@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Tags;
+package info.mrmelon.nfctags.tags;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -6,9 +6,12 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
+import android.nfc.tech.NdefFormatable;
 
-import info.mrmelon.nfctags.Helper.Conversion;
-import info.mrmelon.nfctags.NDEF;
+import java.util.Arrays;
+import java.util.List;
+
+import info.mrmelon.nfctags.utils.Conversion;
 
 /**
  * Created by melon on 10/14/15
@@ -23,6 +26,8 @@ public class TagManager {
     //Constants
     public static final int MIFARE_CLASSIC = 1;
     public static final int MIFARE_ULTRALIGHT = 2;
+    public static final int NDEF = 3;
+    public static final int NDEF_FORMATTABLE = 4;
     public static final int UNKNOWN = 10;
 
     public static final int IN_HEX = 1000;
@@ -36,15 +41,12 @@ public class TagManager {
         return tag;
     }
 
-    public final Ndef getNdefTag(){
-        return Ndef.get(tag);
-    }
 
     public byte [] getTagID(){
         return tag.getId();
     }
 
-    public String getConvertedTagID(int conversionType){
+    public String getTagID(int conversionType){
         if(conversionType == IN_HEX)
             return Conversion.ByteArrayToHexString(getTagID());
         else if (conversionType == IN_DECIMAL)
@@ -52,22 +54,24 @@ public class TagManager {
         return null;
     }
 
-    /*public String [] getTechList(){
-        return tag.getTechList();
-    }*/
 
-    public int getTagType(){
-        if(MifareClassic.get(tag) != null)
-            return MIFARE_CLASSIC;
-        else if (MifareUltralight.get(tag) != null)
-            return MIFARE_ULTRALIGHT;
-        return UNKNOWN;
+    public boolean isTechSupported(int TECH_TYPE){
+        List<String> techList = Arrays.asList(tag.getTechList());
+        switch (TECH_TYPE){
+            case MIFARE_CLASSIC: return techList.contains(MifareClassic.class.getName());
+            case MIFARE_ULTRALIGHT: return techList.contains(MifareUltralight.class.getName());
+            case NDEF: return techList.contains(Ndef.class.getName());
+            case NDEF_FORMATTABLE: return techList.contains(NdefFormatable.class.getName());
+            default: return false;
+        }
     }
 
-    public Object getTagClassAsObject(){
-        switch (getTagType()){
+    public Object getTagClassAsObject(int TECH_TYPE){
+        switch (TECH_TYPE){
             case MIFARE_CLASSIC: return new MifareClassicTag(tag);
             case MIFARE_ULTRALIGHT: return new MifareUltralightTag(tag);
+            case NDEF: return new NdefTag(tag);
+            case NDEF_FORMATTABLE: return new NdefTag(tag);
             default: return null;
         }
     }
