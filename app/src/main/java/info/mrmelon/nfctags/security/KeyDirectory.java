@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Security;
+package info.mrmelon.nfctags.security;
 
 import android.annotation.TargetApi;
 import android.os.Build;

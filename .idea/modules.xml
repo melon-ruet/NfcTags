@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectModuleManager">
+<<<<<<< HEAD
+    <modules />
+=======
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NfcTags.iml" filepath="$PROJECT_DIR$/NfcTags.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
+>>>>>>> a7d4332f5c6a727f8f9cd351a54df3e17e8bcb29
   </component>
 </project>

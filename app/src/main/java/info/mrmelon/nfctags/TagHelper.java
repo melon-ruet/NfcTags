@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 
-import info.mrmelon.nfctags.Helper.Messages;
+import info.mrmelon.nfctags.utils.Messages;
 
 
 public class TagHelper {

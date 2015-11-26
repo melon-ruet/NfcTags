@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Tags;
+package info.mrmelon.nfctags.tags;
 
 import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
@@ -149,4 +149,12 @@ public class MifareUltralightTag {
             lockByte = (byte) (lockByte & ~(1 << index));
         return lockByte;
     }
+
+    /*public int getSize(){
+
+    }
+
+    public int getWritableSize(){
+
+    }*/
 }

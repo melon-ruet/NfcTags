@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.Tags;
+package info.mrmelon.nfctags.tags;
 
 
 import android.annotation.TargetApi;
@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.BitSet;
+import java.util.Map;
 
 
 /**
@@ -31,6 +32,7 @@ public class MifareClassicTag {
 
     public final String SECTOR_TRAILER_CHANGE_FAILED = "Sector trailer change failed";
     public final String SECTOR_TRAILER_CHANGE_SUCCESSFUL = "Sector trailer changed";
+
 
     public MifareClassicTag(Tag tag) {
         mifare = MifareClassic.get(tag);
@@ -169,7 +171,7 @@ public class MifareClassicTag {
         try {
             System.arraycopy(readBlock(mifare.sectorToBlock(sector) + 3), 6, accessBytes, 0, 4);
         }catch (ArrayIndexOutOfBoundsException ex){
-            Log.e("Access bits read error", ex.getMessage());
+            Log.e("Access bits read", ex.getMessage());
         }
 
         BitSet bitSetC = BitSet.valueOf(accessBytes);
@@ -183,5 +185,10 @@ public class MifareClassicTag {
 
         return C;
     }
+
+    public int getWritableSize(){
+        return mifare.getSize() - mifare.getSectorCount()*16;
+    }
+
 }
 

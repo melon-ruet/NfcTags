@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+=======
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -27,6 +29,7 @@
       </value>
     </option>
   </component>
+>>>>>>> a7d4332f5c6a727f8f9cd351a54df3e17e8bcb29
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -37,7 +40,15 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+=======
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+>>>>>>> a7d4332f5c6a727f8f9cd351a54df3e17e8bcb29
+>>>>>>> 426ef89e4f9469f5c110146ab24ff9ec308977e8
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
