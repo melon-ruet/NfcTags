@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.zip.CRC32;
 
 import info.mrmelon.nfctags.security.CommandDirectory;
 import info.mrmelon.nfctags.tags.MifareClassicTag;
@@ -58,7 +59,7 @@ public class MainClass extends Activity {
         Log.e("Tech", Arrays.toString(manager.getTag().getTechList()));
 
 
-        if (manager.isTechSupported(TagManager.MIFARE_ULTRALIGHT)) {
+        /*if (manager.isTechSupported(TagManager.MIFARE_ULTRALIGHT)) {
             MifareUltralightTag ultralight = (MifareUltralightTag) manager.getTagClassAsObject(TagManager.MIFARE_ULTRALIGHT);
             ultralight.connectUltralightTag();
             int page = 4;
@@ -68,9 +69,9 @@ public class MainClass extends Activity {
             //Log.e("write", ultralight.writePage(page, new byte[]{1, 2, 3, 5}) + "");
             Log.e("read", ultralight.getUltralight().getType()+"");
 
-            /*ultralight.lockPage(page, false);
+            *//*ultralight.lockPage(page, false);
             Log.e("write", ultralight.writePage(page, new byte[]{1, 2, 3, 4}) + "");
-            Log.e("read", Arrays.toString(ultralight.readPage(page)));*/
+            Log.e("read", Arrays.toString(ultralight.readPage(page)));*//*
             ultralight.closeUltralightTag();
         } else if (manager.isTechSupported(TagManager.MIFARE_CLASSIC)) {
             MifareClassicTag classic = (MifareClassicTag) manager.getTagClassAsObject(TagManager.MIFARE_CLASSIC);
@@ -94,10 +95,19 @@ public class MainClass extends Activity {
                     e.printStackTrace();
                 }
             }
-        } else if (manager.isTechSupported(TagManager.NFCA)) {
+        } else*/ if (manager.isTechSupported(TagManager.NFCA)) {
             NfcATag nfcA = (NfcATag) manager.getTagClassAsObject(TagManager.NFCA);
             nfcA.connect();
-            Log.e("nfca", Arrays.toString(nfcA.read(CommandDirectory.getReadCommand(0, 0, 0))));
+            byte [] command = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+            System.arraycopy(manager.getTagID(), 0, command, 3, manager.getTagID().length);
+
+            Log.e("CRC", Arrays.toString(CommandDirectory.ComputeCrc(new byte [] {(byte)0x00, (byte) 0x00, (byte) 0x00})) + "   " + Arrays.toString(command));
+
+            byte [] command2 = new byte[command.length+2];
+            System.arraycopy(command, 0, command2, 0, command.length);
+            System.arraycopy(CommandDirectory.ComputeCrc(command), 0, command2, command.length, 2);
+            Log.e("comm2", Arrays.toString(command2));
+            Log.e("nfca", Arrays.toString(nfcA.read(command2)));
             nfcA.close();
         }
 

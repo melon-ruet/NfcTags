@@ -47,8 +47,6 @@ public class NfcATag {
 
     public byte [] read(byte [] command){
         try {
-            nfcA.setTimeout(5000);
-            Log.e("data", nfcA.getTimeout()+ "  "+nfcA.getMaxTransceiveLength()+"  "+ nfcA.getSak());
             return nfcA.transceive(command);
         } catch (IOException e) {
             Log.e("NfcA Read", ""+e.toString());
