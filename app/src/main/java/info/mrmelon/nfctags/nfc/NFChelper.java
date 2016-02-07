@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags;
+package info.mrmelon.nfctags.nfc;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -9,13 +9,13 @@ import android.nfc.NfcAdapter;
 import info.mrmelon.nfctags.utils.Messages;
 
 
-public class TagHelper {
+public class NFChelper {
 
     private NfcAdapter _nfcAdapter;
     private PendingIntent _nfcPendingIntent;
     private Context context;
 
-    public TagHelper(Context context){
+    public NFChelper(Context context){
         this.context = context;
     }
 

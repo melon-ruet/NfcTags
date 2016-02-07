@@ -2,24 +2,16 @@ package info.mrmelon.nfctags;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.NdefRecord;
-import android.nfc.tech.IsoDep;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.Locale;
-import java.util.zip.CRC32;
 
+import info.mrmelon.nfctags.enums.TagType;
+import info.mrmelon.nfctags.nfc.NFChelper;
 import info.mrmelon.nfctags.security.CommandDirectory;
-import info.mrmelon.nfctags.tags.MifareClassicTag;
-import info.mrmelon.nfctags.tags.MifareUltralightTag;
 import info.mrmelon.nfctags.tags.NfcATag;
-import info.mrmelon.nfctags.tags.TagManager;
-import info.mrmelon.nfctags.tags.NdefTag;
-import info.mrmelon.nfctags.ndef.NdefRecordCreator;
+import info.mrmelon.nfctags.nfc.TagManager;
 
 /**
  * Created by melon on 10/14/15
@@ -27,14 +19,14 @@ import info.mrmelon.nfctags.ndef.NdefRecordCreator;
  */
 public class MainClass extends Activity {
 
-    private TagHelper helper;
+    private NFChelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        helper = new TagHelper(this);
+        helper = new NFChelper(this);
         helper.onCreate();
     }
 
@@ -95,18 +87,19 @@ public class MainClass extends Activity {
                     e.printStackTrace();
                 }
             }
-        } else*/ if (manager.isTechSupported(TagManager.NFCA)) {
-            NfcATag nfcA = (NfcATag) manager.getTagClassAsObject(TagManager.NFCA);
+        } else*/ if (manager.isTechSupported(TagType.NFCA)) {
+            NfcATag nfcA = (NfcATag) manager.getTagClassAsObject(TagType.NFCA);
             nfcA.connect();
             byte [] command = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
             System.arraycopy(manager.getTagID(), 0, command, 3, manager.getTagID().length);
 
-            Log.e("CRC", Arrays.toString(CommandDirectory.ComputeCrc(new byte [] {(byte)0x00, (byte) 0x00, (byte) 0x00})) + "   " + Arrays.toString(command));
+            Log.e("CRC", Arrays.toString(CommandDirectory.ComputeCrc(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00})) + "   " + Arrays.toString(command));
 
             byte [] command2 = new byte[command.length+2];
             System.arraycopy(command, 0, command2, 0, command.length);
             System.arraycopy(CommandDirectory.ComputeCrc(command), 0, command2, command.length, 2);
-            Log.e("comm2", Arrays.toString(command2));
+            //Log.e("comm2", Arrays.toString(command2));
+            Log.e("comm3", Arrays.toString(nfcA.read(new byte[]{0x26})));
             Log.e("nfca", Arrays.toString(nfcA.read(command2)));
             nfcA.close();
         }

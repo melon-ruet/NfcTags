@@ -1,4 +1,4 @@
-package info.mrmelon.nfctags.tags;
+package info.mrmelon.nfctags.nfc;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -9,9 +9,16 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.nfc.tech.NfcA;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
+import info.mrmelon.nfctags.enums.ConversionType;
+import info.mrmelon.nfctags.enums.TagType;
+import info.mrmelon.nfctags.tags.MifareClassicTag;
+import info.mrmelon.nfctags.tags.MifareUltralightTag;
+import info.mrmelon.nfctags.tags.NdefTag;
+import info.mrmelon.nfctags.tags.NfcATag;
 import info.mrmelon.nfctags.utils.Conversion;
 
 /**
@@ -21,19 +28,8 @@ import info.mrmelon.nfctags.utils.Conversion;
 
 public class TagManager {
 
-    //Variables
     private Tag tag;
 
-    //Constants
-    public static final int MIFARE_CLASSIC = 1;
-    public static final int MIFARE_ULTRALIGHT = 2;
-    public static final int NDEF = 3;
-    public static final int NDEF_FORMATTABLE = 4;
-    public static final int NFCA = 5;
-    public static final int UNKNOWN = 10;
-
-    public static final int IN_HEX = 1000;
-    public static final int IN_DECIMAL = 1001;
 
     public TagManager(Intent intent){
         tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -47,16 +43,17 @@ public class TagManager {
         return tag.getId();
     }
 
-    public String getTagID(int conversionType){
-        if(conversionType == IN_HEX)
-            return Conversion.ByteArrayToHexString(getTagID());
-        else if (conversionType == IN_DECIMAL)
-            return String.valueOf(Conversion.byte2Number(getTagID()));
-        return null;
+    public String getTagID(ConversionType conversionType){
+        switch (conversionType){
+            case HEX: return Conversion.byteArrayToHexString(getTagID());
+            case DECIMAL: return String.valueOf(Conversion.byte2Number(getTagID()));
+            case BINARY: return new BigInteger(getTagID()).toString(2);
+            default: return null;
+        }
     }
 
 
-    public boolean isTechSupported(int TECH_TYPE){
+    public boolean isTechSupported(TagType TECH_TYPE){
         List<String> techList = Arrays.asList(tag.getTechList());
         switch (TECH_TYPE){
             case MIFARE_CLASSIC: return techList.contains(MifareClassic.class.getName());
@@ -68,7 +65,7 @@ public class TagManager {
         }
     }
 
-    public Object getTagClassAsObject(int TECH_TYPE){
+    public Object getTagClassAsObject(TagType TECH_TYPE){
         switch (TECH_TYPE){
             case MIFARE_CLASSIC: return new MifareClassicTag(tag);
             case MIFARE_ULTRALIGHT: return new MifareUltralightTag(tag);
